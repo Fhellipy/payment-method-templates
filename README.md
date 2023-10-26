@@ -25,4 +25,5 @@ Este é um projeto que utiliza as seguintes tecnologias:
    - `npm run storybook`: Iniciar o servidor Storybook.
    - `npm run build-storybook`: Construir a versão de produção do Storybook.
    - `npm test`: Executar testes com Jest.
+
 # Rifas
