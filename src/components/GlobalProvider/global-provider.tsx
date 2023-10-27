@@ -3,13 +3,13 @@
 import { useEffect } from 'react';
 
 interface GlobaProviderProps {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }
 
 export function GlobaProvider({ children }: GlobaProviderProps): JSX.Element {
-  useEffect(() => {
-    import('preline');
-  }, []);
+	useEffect(() => {
+		import('preline');
+	}, []);
 
-  return <>{children}</>;
+	return <>{children}</>;
 }
