@@ -1,4 +1,4 @@
-import { GlobaProvider } from '@/components';
+import { GlobaProvider, Header } from '@/components/common';
 import { cn } from '@/lib';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -18,8 +18,17 @@ export default function RootLayout({
 }): JSX.Element {
 	return (
 		<html lang="pt-BR">
-			<body className={cn(inter.className, 'h-screen w-full')}>
-				<GlobaProvider>{children}</GlobaProvider>
+			<body
+				className={cn(
+					inter.className,
+					'h-fit w-full flex-col items-center justify-normal gap-2 p-4',
+				)}
+			>
+				<GlobaProvider>
+					<Header />
+
+					{children}
+				</GlobaProvider>
 			</body>
 		</html>
 	);
