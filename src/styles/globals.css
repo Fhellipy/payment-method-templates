@@ -3,18 +3,31 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0, 0%, 100%;
-    --foreground: 222.2, 84%, 4.9%;
-    --primary: 221.2, 83.2%, 53.3%;
-    --primary-foreground: 210, 40%, 98%;
-    --secondary: 210, 40%, 96.1%;
-    --secondary-foreground: 222.2, 47.4%, 11.2%;
-  }
+	:root {
+		--background: 0, 0%, 100%;
+		--foreground: 222.2, 84%, 4.9%;
+		--primary: 221.2, 83.2%, 53.3%;
+		--primary-foreground: 210, 40%, 98%;
+		--secondary: 210, 40%, 96.1%;
+		--secondary-foreground: 222.2, 47.4%, 11.2%;
+
+		--ring: 215 20% 65%;
+		--border: 214.3 31.8% 91.4%;
+
+		--radius: 0.5rem;
+	}
 }
 
 @layer base {
-  body {
-    @apply flex min-h-screen justify-center bg-background text-foreground;
-  }
+	body {
+		@apply flex min-h-screen justify-center bg-background text-foreground;
+	}
+}
+
+@layer components {
+	a,
+	input,
+	button {
+		@apply focus-visible:ring-ring focus-visible:rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 focus-visible:ring-offset-background;
+	}
 }
