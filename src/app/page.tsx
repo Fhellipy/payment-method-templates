@@ -47,16 +47,13 @@ const raffles = [
 
 export default function Home(): JSX.Element {
 	return (
-		<div className="flex w-full flex-col items-center gap-4">
-			<Header />
+		<div className="flex h-fit w-fit max-w-[85rem] flex-col items-center gap-4 rounded-xl border bg-secondary p-6 sm:w-full">
+			<Cards items={raffles} />
 
-			<h1>Home</h1>
-
-			<nav className="flex gap-4 rounded border bg-background p-2 text-foreground">
-				<Link href="/root/1">Tema 1</Link>
-				<Link href="/root/2">Tema 2</Link>
-				<Link href="/root/3">Tema 3</Link>
-			</nav>
+			<div id="scrollspy">
+				<div id="winners">Ganhadores</div>
+				<div id="sweepstakes">Sorteios</div>
+			</div>
 		</div>
 	);
 }
