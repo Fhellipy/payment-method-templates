@@ -7,8 +7,8 @@ export function Header(): JSX.Element {
 	const pathname = usePathname();
 
 	return (
-		<header className="z-50 flex w-full flex-wrap text-sm md:flex-nowrap md:justify-start">
-			<nav className="relative mt-2 w-full max-w-[85rem] rounded-xl border bg-secondary px-4 py-3 md:flex md:items-center md:justify-between xl:mx-auto">
+		<header className="sticky inset-x-0 top-0 z-50 flex w-full flex-wrap bg-background text-sm sm:flex-nowrap sm:justify-start">
+			<nav className="relative w-full max-w-[85rem] border bg-secondary px-4 py-3 sm:mt-2 sm:rounded-xl md:flex md:items-center md:justify-between xl:mx-auto">
 				<div className="flex items-center justify-between">
 					<a href="/" className="flex-none pl-2 text-xl font-semibold">
 						Logo
