@@ -1,4 +1,6 @@
+import { raffles } from '@/mock/raffles';
 import Link from 'next/link';
+import { Cards } from './components';
 
 interface Params {
 	params: { businessID: string };
@@ -16,6 +18,8 @@ export default function BusinessPage({ params }: Params): JSX.Element {
 			<div className="flex h-60 w-60 items-center justify-center rounded bg-primary">
 				<h1 className="text-primary-foreground">Tema #{params.businessID}</h1>
 			</div>
+
+			<Cards items={raffles} />
 		</div>
 	);
 }
