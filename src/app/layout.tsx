@@ -1,4 +1,4 @@
-import { GlobaProvider, Header } from '@/components/common';
+import { GlobaProvider, Header } from '@/components';
 import { cn } from '@/lib';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -21,12 +21,11 @@ export default function RootLayout({
 			<body
 				className={cn(
 					inter.className,
-					'h-fit w-full flex-col items-center justify-normal gap-2 p-4',
+					'min-h-[75rem] flex-col justify-normal sm:px-6 lg:px-8',
 				)}
 			>
 				<GlobaProvider>
 					<Header />
-
 					{children}
 				</GlobaProvider>
 			</body>
