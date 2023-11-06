@@ -2,16 +2,21 @@
 
 import { ChevronDownIcon, MenuIcon, XIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import { MyShopping } from './my-shopping';
 
-export function Header(): JSX.Element {
+type HeaderProps = {
+	logo: string;
+};
+
+export function Header({ logo }: HeaderProps): JSX.Element {
 	const pathname = usePathname();
 
 	return (
-		<header className="sticky inset-x-0 top-0 z-50 flex w-full flex-wrap bg-background text-sm sm:flex-nowrap sm:justify-start">
-			<nav className="relative w-full max-w-[85rem] border bg-secondary px-4 py-3 sm:mt-2 sm:rounded-xl md:flex md:items-center md:justify-between xl:mx-auto">
+		<header className="sticky inset-x-0 top-0 z-50 flex w-full flex-wrap bg-background text-sm sm:flex-nowrap sm:justify-start sm:px-6 lg:px-8">
+			<nav className="relative w-full max-w-[85rem] border bg-secondary px-4 py-2 sm:mt-2 sm:rounded-xl md:flex md:items-center md:justify-between xl:mx-auto">
 				<div className="flex items-center justify-between">
 					<a href="/" className="flex-none pl-2 text-xl font-semibold">
-						Logo
+						{logo}
 					</a>
 
 					<div className="md:hidden">
@@ -33,7 +38,7 @@ export function Header(): JSX.Element {
 					id="navbar-collapse-with-animation"
 					className="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
 				>
-					<div className="mt-3 flex flex-col gap-1 md:mt-0 md:flex-row md:items-center md:justify-end">
+					<div className="mt-3 flex flex-col gap-1 p-1 md:mt-0 md:flex-row md:items-center md:justify-end">
 						<a
 							href="/"
 							className="rounded-md px-3 py-2 font-medium text-primary hover:bg-gray-100"
@@ -48,12 +53,7 @@ export function Header(): JSX.Element {
 							Temas
 						</a>
 
-						<a
-							href="/"
-							className="rounded-md px-3 py-2 font-medium text-gray-500 hover:bg-gray-100"
-						>
-							Meus Bilhetes
-						</a>
+						<MyShopping />
 
 						<div className="hs-dropdown [--adaptive:none] [--strategy:static] md:[--strategy:fixed] md:[--trigger:hover]">
 							<button
