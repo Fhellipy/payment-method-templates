@@ -1,4 +1,4 @@
-import { toBRL } from '@/lib';
+import { toBRL } from '@/utils';
 
 type StatusTagProps = {
 	date: string;

@@ -1,4 +1,4 @@
-import { toBRL } from '@/lib';
+import { toBRL } from '@/utils';
 import Link from 'next/link';
 import { type CardType } from './types';
 

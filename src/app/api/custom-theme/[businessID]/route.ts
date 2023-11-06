@@ -1,4 +1,4 @@
-import { createCSSThemeString, getThemeByBusinessID } from '@/lib';
+import { createCSSThemeString, getThemeByBusinessID } from '@/utils';
 
 type RouteHandler = (req: Request) => Response;
 
