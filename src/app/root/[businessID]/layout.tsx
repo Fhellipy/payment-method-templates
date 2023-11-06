@@ -1,3 +1,6 @@
+import { Footer, Header, Loading } from '@/components';
+import { Suspense } from 'react';
+
 interface BusinessLayoutProps {
 	params: {
 		businessID: string;
@@ -12,7 +15,12 @@ function BusinessLayout({
 	return (
 		<>
 			<link rel="stylesheet" href={`/api/custom-theme/${params.businessID}`} />
-			{children}
+
+			<Suspense fallback={<Loading />}>
+				<Header logo={`Logo ${params.businessID}`} />
+				{children}
+				<Footer social={{ instagram: '', whatsapp: '' }} />
+			</Suspense>
 		</>
 	);
 }
