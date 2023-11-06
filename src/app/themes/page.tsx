@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Themes(): JSX.Element {
 	return (
-		<main className="flex h-full min-h-[75rem] w-full flex-col items-center gap-4 border">
+		<main className="flex h-full min-h-[55rem] w-full flex-col items-center gap-4 border">
 			<h1>Temas</h1>
 
 			<nav className="flex gap-4 rounded border bg-background p-2 text-foreground">
