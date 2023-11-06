@@ -1,25 +1,18 @@
 import { raffles } from '@/mock/raffles';
-import Link from 'next/link';
-import { Cards } from './components';
+import { Cards, ImageCarousel } from './components';
 
 interface Params {
 	params: { businessID: string };
 }
 
 export default function BusinessPage({ params }: Params): JSX.Element {
-	return (
-		<div className="flex flex-col items-center gap-4 p-2">
-			<Link href="/">
-				<button className="text-primary-background rounded border bg-secondary p-2">
-					Voltar
-				</button>
-			</Link>
+	console.log(params);
 
-			<div className="flex h-60 w-60 items-center justify-center rounded bg-primary">
-				<h1 className="text-primary-foreground">Tema #{params.businessID}</h1>
-			</div>
+	return (
+		<main className="flex flex-col items-center gap-4 px-2 py-4 sm:px-6 lg:px-8">
+			<ImageCarousel />
 
 			<Cards items={raffles} />
-		</div>
+		</main>
 	);
 }
