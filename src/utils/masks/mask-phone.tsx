@@ -2,7 +2,7 @@ import { onlyNumberRegex } from '@/lib';
 import { type FormEvent } from 'react';
 
 export function maskPhone(onChange: FormEvent<HTMLInputElement>) {
-	onChange.currentTarget.maxLength = 15;
+	onChange.currentTarget.maxLength = 13;
 
 	let { value } = onChange.currentTarget;
 
@@ -12,8 +12,6 @@ export function maskPhone(onChange: FormEvent<HTMLInputElement>) {
 		value = value.replace(/(\d{2})(\d{4})(\d{4})/g, '$1 $2-$3');
 	} else if (value.length === 11) {
 		value = value.replace(/(\d{2})(\d{5})(\d{4})/g, '$1 $2-$3');
-	} else if (value.length === 13) {
-		value = value.replace(/(\d{2})(\d{2})(\d{5})(\d{4})/g, '$1 $2 $3-$4');
 	}
 
 	onChange.currentTarget.value = value;
