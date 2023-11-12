@@ -1,4 +1,5 @@
 import { InstagramIcon } from 'lucide-react';
+import Link from 'next/link';
 import { BsWhatsapp } from 'react-icons/bs';
 
 type FooterProps = {
@@ -16,13 +17,13 @@ export function Footer({ social }: FooterProps): JSX.Element {
 			</span>
 
 			<div className="mt-1 flex items-center gap-2">
-				<a href={social?.whatsapp} className="cursor-pointer text-[1.2rem]">
+				<Link href={social?.whatsapp} className="cursor-pointer text-[1.2rem]">
 					<BsWhatsapp />
-				</a>
+				</Link>
 
-				<a href={social?.instagram}>
+				<Link href={social?.instagram}>
 					<InstagramIcon size={20} className="cursor-pointer" />
-				</a>
+				</Link>
 			</div>
 		</footer>
 	);

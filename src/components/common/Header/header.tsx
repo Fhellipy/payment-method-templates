@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDownIcon, MenuIcon, XIcon } from 'lucide-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Form } from '../Form';
 
@@ -16,9 +17,9 @@ export function Header({ logo, url }: HeaderProps): JSX.Element {
 		<header className="sticky inset-x-0 top-0 z-50 flex w-full flex-wrap bg-background text-sm sm:flex-nowrap sm:justify-start sm:px-6 lg:px-8">
 			<nav className="relative w-full max-w-[85rem] border bg-secondary px-4 py-2 sm:mt-2 sm:rounded-xl md:flex md:items-center md:justify-between xl:mx-auto">
 				<div className="flex items-center justify-between">
-					<a href={url} className="flex-none pl-2 text-xl font-semibold">
+					<Link href={url} className="flex-none pl-2 text-xl font-semibold">
 						{logo}
-					</a>
+					</Link>
 
 					<div className="md:hidden">
 						<button
@@ -40,19 +41,19 @@ export function Header({ logo, url }: HeaderProps): JSX.Element {
 					className="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 md:block"
 				>
 					<div className="mt-3 flex flex-col gap-1 p-1 md:mt-0 md:flex-row md:items-center md:justify-end">
-						<a
-							href="/"
+						<Link
+							href={url}
 							className="rounded-md px-3 py-2 font-medium text-primary hover:bg-gray-100"
 						>
 							Inicio
-						</a>
+						</Link>
 
-						<a
+						<Link
 							href="/themes"
 							className="rounded-md px-3 py-2 font-medium text-gray-500 hover:bg-gray-100"
 						>
 							Temas
-						</a>
+						</Link>
 
 						<Form variant="search" buttonOpen="Minhas Compras" />
 
@@ -71,19 +72,19 @@ export function Header({ logo, url }: HeaderProps): JSX.Element {
 									? { 'data-hs-scrollspy': '#scrollspy' }
 									: '')}
 							>
-								<a
+								<Link
 									className="flex items-center rounded-md px-3 py-2 text-sm text-gray-800 hover:bg-gray-100"
 									href={pathname === '/' ? '#sweepstakes' : '/#sweepstakes'}
 								>
 									Sorteios
-								</a>
+								</Link>
 
-								<a
+								<Link
 									className="flex items-center rounded-md px-3 py-2 text-sm text-gray-800 hover:bg-gray-100"
 									href={pathname === '/' ? '#winners' : '/#winners'}
 								>
 									Ganhadores
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>
