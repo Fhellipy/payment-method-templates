@@ -6,13 +6,13 @@ interface Params {
 }
 
 export default function BusinessPage({ params }: Params): JSX.Element {
-	console.log(params);
+	const businessID = params.businessID;
 
 	return (
 		<main className="flex flex-col items-center gap-4 px-2 py-4 sm:px-6 lg:px-8">
 			<ImageCarousel />
 
-			<Cards items={raffles} />
+			<Cards items={raffles} businessID={businessID} />
 		</main>
 	);
 }

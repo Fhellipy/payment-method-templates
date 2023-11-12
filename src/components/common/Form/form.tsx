@@ -1,6 +1,10 @@
+'use client';
+
 import { useLocalStorage } from '@/hooks';
+import { cn } from '@/lib';
 import { formatPhone, maskPhone } from '@/utils';
 import { Dialog, Transition } from '@headlessui/react';
+import { cva } from 'class-variance-authority';
 import { Fragment, useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
@@ -9,7 +13,12 @@ type UserType = {
 	phone: string;
 };
 
-export function MyShopping(): JSX.Element {
+type FormProps = {
+	variant: 'search' | 'purchase' | 'purchase_promotion';
+	buttonOpen: string;
+};
+
+export function Form({ variant, buttonOpen }: FormProps): JSX.Element {
 	const [isOpen, setIsOpen] = useState(false);
 	const [user, setUser] = useLocalStorage('user', { name: '', phone: '' });
 
@@ -30,14 +39,30 @@ export function MyShopping(): JSX.Element {
 		onClose();
 	};
 
+	const buttonVariants = cva('py-2', {
+		variants: {
+			variant: {
+				search:
+					'flex items-start rounded-md px-3 font-medium text-gray-500 hover:bg-gray-100',
+				purchase:
+					'mt-2 w-full rounded bg-primary px-4 text-primary-foreground transition-all hover:bg-primary/80 duration-300',
+				purchase_promotion:
+					'w-full rounded border text-sm px-2 py-1 bg-primary transition-all text-primary-foreground hover:bg-primary/80 duration-300',
+			},
+		},
+		defaultVariants: {
+			variant: 'search',
+		},
+	});
+
 	return (
 		<>
 			<button
 				type="button"
 				onClick={() => setIsOpen(true)}
-				className="flex items-start rounded-md px-3 py-2 font-medium text-gray-500 hover:bg-gray-100"
+				className={cn(buttonVariants({ variant }))}
 			>
-				Minhas Compras
+				{buttonOpen}
 			</button>
 
 			<Transition appear show={isOpen} as={Fragment}>
@@ -70,7 +95,9 @@ export function MyShopping(): JSX.Element {
 										as="h3"
 										className="text-lg font-medium leading-6 text-foreground"
 									>
-										Buscar minhas compras
+										{variant === 'search'
+											? 'Buscar minhas compras'
+											: 'Comprar agora'}
 									</Dialog.Title>
 
 									<div className="mt-4 flex flex-col gap-0.5">
@@ -124,7 +151,7 @@ export function MyShopping(): JSX.Element {
 										className="mt-4 inline-flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary"
 										onClick={() => handleSubmit(onSubmit)()}
 									>
-										Buscar
+										{variant === 'search' ? 'Buscar' : 'Comprar'}
 									</button>
 								</Dialog.Panel>
 							</Transition.Child>

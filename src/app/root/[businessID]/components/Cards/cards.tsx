@@ -4,16 +4,17 @@ import { type CardType } from './types';
 
 type CardProps = {
 	items: CardType[];
+	businessID: string;
 };
 
-export function Cards({ items }: CardProps): JSX.Element {
+export function Cards({ items, businessID }: CardProps): JSX.Element {
 	return (
 		<div className="mx-auto grid max-w-[85rem] gap-6 rounded border px-4 py-6 sm:px-6 lg:grid-cols-2 lg:gap-y-6">
 			{items.map((item) => (
 				<Link
 					key={item.id}
 					className="group overflow-hidden rounded-xl border"
-					href="/"
+					href={`/root/${businessID}/${item.id}`}
 				>
 					<div className="items-center px-4 py-4 sm:flex sm:py-2">
 						<div className="relative h-48 w-full flex-shrink-0 overflow-hidden rounded-xl bg-primary sm:w-56">
