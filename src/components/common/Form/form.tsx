@@ -134,6 +134,10 @@ export function Form({ variant, buttonOpen }: FormProps): JSX.Element {
 											defaultValue={user.phone || ''}
 											{...register('phone', {
 												required: 'Campo obrigatório',
+												minLength: {
+													value: 10,
+													message: 'Telefone inválido',
+												},
 												onChange: maskPhone,
 												onBlur: formatPhone,
 											})}

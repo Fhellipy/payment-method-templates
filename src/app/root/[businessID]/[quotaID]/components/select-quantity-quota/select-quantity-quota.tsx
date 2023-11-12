@@ -4,31 +4,17 @@ import { Form } from '@/components';
 import { toBRL } from '@/utils';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
+import {
+	handleAddQuantity,
+	handleInputChange,
+	handleSubtractQuantity,
+} from './utils';
 
 const MAX_QUOTA = 1300;
+const BUY_COMBO = [1, 10, 100, 300, 500, 1000];
 
 export function SelectQuantityQuota(): JSX.Element {
 	const [quantity, setQuantity] = useState(1);
-
-	const handleAddQuantity = (qtd: number) => {
-		if (quantity === MAX_QUOTA) return;
-
-		if (quantity + qtd > MAX_QUOTA) {
-			setQuantity(MAX_QUOTA);
-		} else {
-			setQuantity(quantity + qtd);
-		}
-	};
-
-	const handleSubtractQuantity = (qtd: number) => {
-		if (quantity === 1) return;
-
-		if (quantity - qtd < 1) {
-			setQuantity(1);
-		} else {
-			setQuantity(quantity - qtd);
-		}
-	};
 
 	const purchasePromotionsData = [
 		{
@@ -105,54 +91,24 @@ export function SelectQuantityQuota(): JSX.Element {
 
 			<div className="flex w-full max-w-[40rem] flex-col items-center">
 				<div className="mb-2 grid w-full grid-cols-3 gap-2">
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(1)}
-					>
-						+1
-					</button>
-
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(10)}
-					>
-						+10
-					</button>
-
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(100)}
-					>
-						+100
-					</button>
-
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(300)}
-					>
-						+300
-					</button>
-
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(500)}
-					>
-						+500
-					</button>
-
-					<button
-						className="w-full rounded border px-2 py-1 hover:bg-gray-100"
-						onClick={() => handleAddQuantity(1000)}
-					>
-						+1000
-					</button>
+					{BUY_COMBO.map((combo, index) => (
+						<button
+							key={index}
+							className="w-full rounded border px-2 py-1 hover:bg-gray-100"
+							onClick={() =>
+								handleAddQuantity(quantity, MAX_QUOTA, combo, setQuantity)
+							}
+						>
+							+{combo}
+						</button>
+					))}
 				</div>
 
 				<div className="flex w-full items-end justify-between gap-2 gap-x-5 rounded border p-4">
 					<button
 						type="button"
 						className="inline-flex h-8 w-8 items-center justify-center gap-x-2 rounded-full border bg-background text-sm font-medium shadow hover:bg-gray-100"
-						onClick={() => handleSubtractQuantity(1)}
+						onClick={() => handleSubtractQuantity(quantity, setQuantity)}
 					>
 						<MinusIcon size={16} />
 					</button>
@@ -168,14 +124,16 @@ export function SelectQuantityQuota(): JSX.Element {
 							value={quantity}
 							placeholder="1"
 							className="w-full items-center rounded border bg-transparent px-2 py-1 text-center text-gray-500"
-							onChange={(e) => setQuantity(Number(e.target.value))}
+							onChange={(ev) => handleInputChange(ev, MAX_QUOTA, setQuantity)}
 						/>
 					</div>
 
 					<button
 						type="button"
 						className="inline-flex h-8 w-8 items-center justify-center gap-x-2 rounded-full border bg-background text-sm font-medium shadow hover:bg-gray-100"
-						onClick={() => handleAddQuantity(1)}
+						onClick={() =>
+							handleAddQuantity(quantity, MAX_QUOTA, 1, setQuantity)
+						}
 					>
 						<PlusIcon size={16} />
 					</button>
