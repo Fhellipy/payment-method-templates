@@ -12,12 +12,14 @@ function BusinessLayout({
 	children,
 	params,
 }: BusinessLayoutProps): JSX.Element {
+	const businessID = params.businessID;
+
 	return (
 		<>
-			<link rel="stylesheet" href={`/api/custom-theme/${params.businessID}`} />
+			<link rel="stylesheet" href={`/api/custom-theme/${businessID}`} />
 
 			<Suspense fallback={<Loading />}>
-				<Header logo={`Logo ${params.businessID}`} />
+				<Header logo={`Logo ${businessID}`} url={`/root/${businessID}`} />
 				{children}
 				<Footer social={{ instagram: '', whatsapp: '' }} />
 			</Suspense>
