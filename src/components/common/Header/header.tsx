@@ -2,20 +2,21 @@
 
 import { ChevronDownIcon, MenuIcon, XIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { MyShopping } from './my-shopping';
+import { Form } from '../Form';
 
 type HeaderProps = {
 	logo: string;
+	url: string;
 };
 
-export function Header({ logo }: HeaderProps): JSX.Element {
+export function Header({ logo, url }: HeaderProps): JSX.Element {
 	const pathname = usePathname();
 
 	return (
 		<header className="sticky inset-x-0 top-0 z-50 flex w-full flex-wrap bg-background text-sm sm:flex-nowrap sm:justify-start sm:px-6 lg:px-8">
 			<nav className="relative w-full max-w-[85rem] border bg-secondary px-4 py-2 sm:mt-2 sm:rounded-xl md:flex md:items-center md:justify-between xl:mx-auto">
 				<div className="flex items-center justify-between">
-					<a href="/" className="flex-none pl-2 text-xl font-semibold">
+					<a href={url} className="flex-none pl-2 text-xl font-semibold">
 						{logo}
 					</a>
 
@@ -53,7 +54,7 @@ export function Header({ logo }: HeaderProps): JSX.Element {
 							Temas
 						</a>
 
-						<MyShopping />
+						<Form variant="search" buttonOpen="Minhas Compras" />
 
 						<div className="hs-dropdown [--adaptive:none] [--strategy:static] md:[--strategy:fixed] md:[--trigger:hover]">
 							<button
