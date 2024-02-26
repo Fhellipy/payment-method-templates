@@ -1,7 +1,7 @@
 'use client';
 
 import Autoplay from 'embla-carousel-autoplay';
-import useEmblaCarousel, { type EmblaOptionsType } from 'embla-carousel-react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { useCallback } from 'react';
 
@@ -15,7 +15,7 @@ type BannersProps = {
 	banners: Image[];
 };
 
-const OPTIONS: EmblaOptionsType = { loop: true };
+const OPTIONS = { loop: true };
 
 export function BannersCarousel({ banners }: BannersProps): JSX.Element {
 	const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS, [Autoplay()]);
