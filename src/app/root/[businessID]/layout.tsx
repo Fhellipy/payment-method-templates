@@ -1,17 +1,17 @@
-import { Footer, Header, Loading } from '@/components';
+import { MainLayout } from '@modules/layout';
+import { Loading } from '@shared/components';
 import { Suspense } from 'react';
 
-interface BusinessLayoutProps {
+type BusinessLayoutProps = {
 	params: {
 		businessID: string;
 	};
 	children: React.ReactNode;
-}
+};
 
-function BusinessLayout({
-	children,
-	params,
-}: BusinessLayoutProps): JSX.Element {
+function BusinessLayout(props: BusinessLayoutProps): JSX.Element {
+	const { children, params } = props;
+
 	const businessID = params.businessID;
 
 	return (
@@ -19,9 +19,12 @@ function BusinessLayout({
 			<link rel="stylesheet" href={`/api/custom-theme/${businessID}`} />
 
 			<Suspense fallback={<Loading />}>
-				<Header logo={`Logo ${businessID}`} url={`/root/${businessID}`} />
-				{children}
-				<Footer social={{ instagram: '', whatsapp: '' }} />
+				<MainLayout
+					header={{ logo: `Logo ${businessID}`, url: `/root/${businessID}` }}
+					socialMedias={{ instagram: '', whatsapp: '' }}
+				>
+					{children}
+				</MainLayout>
 			</Suspense>
 		</>
 	);
