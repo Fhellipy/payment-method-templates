@@ -1,12 +1,13 @@
-import { Footer, Header } from '@/components';
+import { MainLayout } from '@modules/layout';
 import Home from './home';
 
 export default function HomePage(): JSX.Element {
 	return (
-		<>
-			<Header logo="Logo" url="/" />
+		<MainLayout
+			header={{ logo: 'Logo', url: '/' }}
+			socialMedias={{ instagram: '', whatsapp: '' }}
+		>
 			<Home />
-			<Footer social={{ instagram: '', whatsapp: '' }} />
-		</>
+		</MainLayout>
 	);
 }
