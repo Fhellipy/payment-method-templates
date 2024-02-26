@@ -10,7 +10,7 @@ Este é um projeto que utiliza as seguintes tecnologias:
 - Prettier
 - ESLint
 - Zod
-- Shaduai
+- Shadcn/ai
 
 ## Como iniciar o projeto
 
