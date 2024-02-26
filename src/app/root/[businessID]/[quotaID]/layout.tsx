@@ -1,12 +1,12 @@
-import { Loading } from '@/components';
+import { Loading } from '@shared/components';
 import { Suspense } from 'react';
 
-interface QuotaLayoutProps {
+type QuotaLayoutProps = {
 	params: {
 		businessID: string;
 	};
 	children: React.ReactNode;
-}
+};
 
 function QuotaLayout({ children, params }: QuotaLayoutProps): JSX.Element {
 	return (
