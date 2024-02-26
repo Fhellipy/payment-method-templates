@@ -19,16 +19,10 @@
 }
 
 @layer base {
-	body {
-		@apply flex min-h-screen justify-center bg-background text-foreground;
+	* {
+		@apply border-border;
 	}
-}
-
-@layer components {
-	a,
-	input,
-	summary,
-	button {
-		@apply focus-visible:rounded focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background;
+	body {
+		@apply bg-background text-foreground;
 	}
 }
