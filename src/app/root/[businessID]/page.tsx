@@ -1,9 +1,9 @@
-import { raffles } from '@/mock/raffles';
-import { Cards, ImageCarousel } from './components';
+import { ImageCarousel, ListQuotaCardsByCompany } from '@modules/business';
+import { RAFFLES } from '@shared/mock';
 
-interface Params {
+type Params = {
 	params: { businessID: string };
-}
+};
 
 export default function BusinessPage({ params }: Params): JSX.Element {
 	const businessID = params.businessID;
@@ -12,7 +12,7 @@ export default function BusinessPage({ params }: Params): JSX.Element {
 		<main className="flex flex-col items-center gap-4 px-2 py-4 sm:px-6 lg:px-8">
 			<ImageCarousel />
 
-			<Cards items={raffles} businessID={businessID} />
+			<ListQuotaCardsByCompany items={RAFFLES} businessID={businessID} />
 		</main>
 	);
 }
