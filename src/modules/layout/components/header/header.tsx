@@ -1,11 +1,11 @@
 'use client';
 
+import { Form } from '@modules/my-purchase';
 import {
 	Accordion,
 	AccordionContent,
 	AccordionItem,
 	AccordionTrigger,
-	Form,
 } from '@shared/components';
 import { cn } from '@shared/lib';
 import { MenuIcon, XIcon } from 'lucide-react';
