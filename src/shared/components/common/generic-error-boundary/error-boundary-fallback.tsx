@@ -21,7 +21,7 @@ export function ErrorBoundaryFallback({
 					{error.message}
 				</pre>
 
-				<p className="text-muted-foreground my-3 flex flex-col items-center text-sm sm:flex-row">
+				<p className="my-3 flex flex-col items-center text-sm text-muted-foreground sm:flex-row">
 					<HelpCircleIcon size={16} className="mr-2" />
 					Se o problema persistir, entre em contato com o &nbsp;
 					<Link className="underline" href="/contato">
