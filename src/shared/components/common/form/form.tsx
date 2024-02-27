@@ -1,171 +1,179 @@
 'use client';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { useLocalStorage } from '@shared/hooks';
+import type * as LabelPrimitive from '@radix-ui/react-label';
+import { Slot } from '@radix-ui/react-slot';
+import * as React from 'react';
+import {
+	Controller,
+	FormProvider,
+	useFormContext,
+	type ControllerProps,
+	type FieldPath,
+	type FieldValues,
+} from 'react-hook-form';
+
+import { Label } from '@shared/components';
 import { cn } from '@shared/lib';
-import { formatPhone, maskPhone } from '@shared/utils';
-import { cva } from 'class-variance-authority';
-import { useParams, useRouter } from 'next/navigation';
-import { Fragment, useState } from 'react';
-import { useForm, type SubmitHandler } from 'react-hook-form';
 
-type UserType = {
-	name: string;
-	phone: string;
+const Form = FormProvider;
+
+type FormFieldContextValue<
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = {
+	name: TName;
 };
 
-type FormProps = {
-	variant: 'search' | 'purchase' | 'purchase_promotion';
-	buttonOpen: string;
+const FormFieldContext = React.createContext<FormFieldContextValue>(
+	{} as FormFieldContextValue,
+);
+
+const FormField = <
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
+	...props
+}: ControllerProps<TFieldValues, TName>) => {
+	return (
+		<FormFieldContext.Provider value={{ name: props.name }}>
+			<Controller {...props} />
+		</FormFieldContext.Provider>
+	);
 };
 
-export function Form({ variant, buttonOpen }: FormProps): JSX.Element {
-	const [isOpen, setIsOpen] = useState(false);
-	const [user, setUser] = useLocalStorage('user', { name: '', phone: '' });
+const useFormField = () => {
+	const fieldContext = React.useContext(FormFieldContext);
+	const itemContext = React.useContext(FormItemContext);
+	const { getFieldState, formState } = useFormContext();
 
-	const params = useParams<{ businessID: string }>();
-	const router = useRouter();
+	const fieldState = getFieldState(fieldContext.name, formState);
 
-	const form = useForm<UserType>();
+	if (!fieldContext) {
+		throw new Error('useFormField should be used within <FormField>');
+	}
 
-	const onClose = () => {
-		setIsOpen(false);
-		form.clearErrors();
+	const { id } = itemContext;
+
+	return {
+		id,
+		name: fieldContext.name,
+		formItemId: `${id}-form-item`,
+		formDescriptionId: `${id}-form-item-description`,
+		formMessageId: `${id}-form-item-message`,
+		...fieldState,
 	};
+};
 
-	const onSubmit: SubmitHandler<UserType> = (data) => {
-		setUser(data);
-		onClose();
+type FormItemContextValue = {
+	id: string;
+};
 
-		if (variant === 'search') {
-			router.push(`/root/${params.businessID}/minhas-compras`);
-		}
-	};
+const FormItemContext = React.createContext<FormItemContextValue>(
+	{} as FormItemContextValue,
+);
 
-	const buttonVariants = cva('py-1  whitespace-nowrap', {
-		variants: {
-			variant: {
-				search:
-					'flex items-start rounded-md p-2 font-medium text-gray-500 hover:bg-gray-200',
-				purchase:
-					'mt-2 w-full rounded bg-primary px-4 text-primary-foreground transition-all hover:bg-primary/80 duration-300',
-				purchase_promotion:
-					'w-full rounded border text-sm px-2 py-1 bg-primary transition-all text-primary-foreground hover:bg-primary/80 duration-300',
-			},
-		},
-		defaultVariants: {
-			variant: 'search',
-		},
-	});
+const FormItem = React.forwardRef<
+	HTMLDivElement,
+	React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+	const id = React.useId();
 
 	return (
-		<>
-			<button
-				type="button"
-				onClick={() => setIsOpen(true)}
-				className={cn(buttonVariants({ variant }))}
-			>
-				{buttonOpen}
-			</button>
-
-			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-50" onClose={onClose}>
-					<Transition.Child
-						as={Fragment}
-						enter="ease-out duration-300"
-						enterFrom="opacity-0"
-						enterTo="opacity-100"
-						leave="ease-in duration-200"
-						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
-						<div className="fixed inset-0 bg-black/60" />
-					</Transition.Child>
-
-					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full items-center justify-center p-4 text-center">
-							<Transition.Child
-								as={Fragment}
-								enter="ease-out duration-300"
-								enterFrom="opacity-0 scale-95"
-								enterTo="opacity-100 scale-100"
-								leave="ease-in duration-200"
-								leaveFrom="opacity-100 scale-100"
-								leaveTo="opacity-0 scale-95"
-							>
-								<Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-background p-6 text-left align-middle shadow-xl transition-all">
-									<Dialog.Title
-										as="h3"
-										className="text-lg font-medium leading-6 text-foreground"
-									>
-										{variant === 'search'
-											? 'Buscar minhas compras'
-											: 'Comprar agora'}
-									</Dialog.Title>
-
-									<div className="mt-4 flex flex-col gap-0.5">
-										<label htmlFor="name" className="w-fit text-base">
-											Nome
-										</label>
-
-										<input
-											type="text"
-											id="name"
-											placeholder="Ex: João da Silva"
-											className="h-10 rounded border px-2 py-1 text-sm"
-											defaultValue={user.name || ''}
-											{...form.register('name', {
-												required: 'Campo obrigatório',
-											})}
-										/>
-
-										{form.formState.errors.name && (
-											<span className="text-sm text-red-500">
-												{form.formState.errors.name.message}
-											</span>
-										)}
-
-										<label htmlFor="phone" className="mt-3 w-fit text-base">
-											Telefone
-										</label>
-
-										<input
-											type="text"
-											id="phone"
-											placeholder="Ex: (00) 00000-0000"
-											className="h-10 rounded border px-2 py-1 text-sm"
-											defaultValue={user.phone || ''}
-											{...form.register('phone', {
-												required: 'Campo obrigatório',
-												minLength: {
-													value: 10,
-													message: 'Telefone inválido',
-												},
-												onChange: maskPhone,
-												onBlur: formatPhone,
-											})}
-										/>
-
-										{form.formState.errors.phone && (
-											<span className="text-sm text-red-500">
-												{form.formState.errors.phone.message}
-											</span>
-										)}
-									</div>
-
-									<button
-										type="button"
-										className="mt-4 inline-flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary"
-										onClick={() => form.handleSubmit(onSubmit)()}
-									>
-										{variant === 'search' ? 'Buscar' : 'Comprar'}
-									</button>
-								</Dialog.Panel>
-							</Transition.Child>
-						</div>
-					</div>
-				</Dialog>
-			</Transition>
-		</>
+		<FormItemContext.Provider value={{ id }}>
+			<div ref={ref} className={cn('space-y-0.5', className)} {...props} />
+		</FormItemContext.Provider>
 	);
-}
+});
+FormItem.displayName = 'FormItem';
+
+const FormLabel = React.forwardRef<
+	React.ElementRef<typeof LabelPrimitive.Root>,
+	React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => {
+	const { formItemId } = useFormField();
+
+	return (
+		<Label
+			ref={ref}
+			className={cn('px-0.5 font-semibold', className)}
+			htmlFor={formItemId}
+			{...props}
+		/>
+	);
+});
+FormLabel.displayName = 'FormLabel';
+
+const FormControl = React.forwardRef<
+	React.ElementRef<typeof Slot>,
+	React.ComponentPropsWithoutRef<typeof Slot>
+>(({ ...props }, ref) => {
+	const { error, formItemId, formDescriptionId, formMessageId } =
+		useFormField();
+
+	return (
+		<Slot
+			ref={ref}
+			id={formItemId}
+			aria-describedby={
+				!error
+					? `${formDescriptionId}`
+					: `${formDescriptionId} ${formMessageId}`
+			}
+			aria-invalid={!!error}
+			{...props}
+		/>
+	);
+});
+FormControl.displayName = 'FormControl';
+
+const FormDescription = React.forwardRef<
+	HTMLParagraphElement,
+	React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => {
+	const { formDescriptionId } = useFormField();
+
+	return (
+		<p
+			ref={ref}
+			id={formDescriptionId}
+			className={cn('text-sm text-muted-foreground', className)}
+			{...props}
+		/>
+	);
+});
+FormDescription.displayName = 'FormDescription';
+
+const FormMessage = React.forwardRef<
+	HTMLParagraphElement,
+	React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, children, ...props }, ref) => {
+	const { error, formMessageId } = useFormField();
+	const body = error ? String(error?.message) : children;
+
+	if (!body) {
+		return null;
+	}
+
+	return (
+		<p
+			ref={ref}
+			id={formMessageId}
+			className={cn('text-sm font-medium text-destructive', className)}
+			{...props}
+		>
+			{body}
+		</p>
+	);
+});
+FormMessage.displayName = 'FormMessage';
+
+export {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	useFormField,
+};
