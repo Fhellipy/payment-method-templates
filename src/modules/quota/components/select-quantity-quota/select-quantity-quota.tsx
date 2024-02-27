@@ -1,6 +1,7 @@
 'use client';
 
-import { Form } from '@shared/components';
+import { Form } from '@modules/my-purchase';
+
 import { toBRL } from '@shared/utils';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
