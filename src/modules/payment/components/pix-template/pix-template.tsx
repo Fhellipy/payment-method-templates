@@ -23,6 +23,7 @@ export function PixTemplate() {
 			</div>
 
 			<Button
+				className="bg-black text-white hover:bg-black/85"
 				onClick={() => {
 					alert('Pedido finalizado com sucesso!');
 				}}
