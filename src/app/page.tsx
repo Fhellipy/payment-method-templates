@@ -1,13 +1,9 @@
-import { MainLayout } from '@modules/layout';
-import Home from './home';
+import { ListPayments } from '@modules/payment';
 
 export default function HomePage(): JSX.Element {
 	return (
-		<MainLayout
-			header={{ logo: 'Logo', url: '/' }}
-			socialMedias={{ instagram: '', whatsapp: '' }}
-		>
-			<Home />
-		</MainLayout>
+		<main className="mx-auto flex min-h-[51rem] w-full max-w-[90rem] flex-col items-center gap-4 px-2 py-4 sm:px-6 lg:px-10">
+			<ListPayments />
+		</main>
 	);
 }
