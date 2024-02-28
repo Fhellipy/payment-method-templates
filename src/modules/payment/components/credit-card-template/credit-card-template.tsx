@@ -77,7 +77,12 @@ export function CreditCardTemplate() {
 						/>
 					</div>
 
-					<Button type="submit">Finalizar Compra</Button>
+					<Button
+						className="bg-black text-white hover:bg-black/85"
+						type="submit"
+					>
+						Finalizar Compra
+					</Button>
 				</form>
 			</Form>
 
