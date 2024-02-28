@@ -10,14 +10,14 @@ export function ErrorBoundaryFallback({
 		<div className="flex w-full justify-center">
 			<div
 				role="alert"
-				className="container m-4 my-5 w-full rounded border border-primary bg-primary/5 px-4 py-3 text-primary"
+				className="border-primary bg-primary/5 text-primary container m-4 my-5 w-full rounded border px-4 py-3"
 			>
 				<p>
 					<ActivityIcon className="mr-2 inline-block" />
 					Algo deu errado:
 				</p>
 
-				<pre className="my-3 overflow-auto whitespace-normal rounded bg-primary p-2 font-mono text-primary-foreground">
+				<pre className="bg-primary text-primary-foreground my-3 overflow-auto whitespace-normal rounded p-2 font-mono">
 					{error.message}
 				</pre>
 
